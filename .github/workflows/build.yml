@@ -60,3 +60,9 @@ jobs:
       # --- List generated wheels ---
       - name: List wheels
         run: ls wheelhouse
+
+      - name: Upload wheels as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels
+          path: wheelhouse/*
