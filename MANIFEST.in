@@ -1,0 +1,4 @@
+include src/*.cpp
+include CMakeLists.txt
+include README.md
+include LICENSE

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "ft-tokenize"
+version = "0.1.5"
+description = "Tokenizer for NLP"
+authors = [{ name = "Tommaso Facchin" }]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.8"
+
+[tool.cibuildwheel]
+build = "cp3*-*"
+
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux_2_28"
