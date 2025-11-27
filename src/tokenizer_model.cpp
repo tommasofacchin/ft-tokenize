@@ -206,9 +206,9 @@ string TokenizerModel::decode_tokens(const vector<string> &tokens) const {
 
 // Training
 void TokenizerModel::train_from_textfile(const string &input_file,
-                             size_t vocab_size = 10000,
-                             const vector<string> &user_defined_symbols = {},
-                             TokenizerMode mode = TokenizerMode::WORD){
+                             size_t vocab_size,
+                             const vector<string> &user_defined_symbols,
+                             TokenizerMode mode){
     
     this->mode = mode;
 
@@ -219,6 +219,10 @@ void TokenizerModel::train_from_textfile(const string &input_file,
     }
 
     
+}
+
+bool compareByFreq(const pair<string, size_t> &a, const pair<string, size_t> &b) {
+    return a.second > b.second; 
 }
 
 void TokenizerModel::train_word_level(const string &input_file,
@@ -448,7 +452,3 @@ void TokenizerModel::load_model(const string &model_path){
     ifs.close();
 }
 
-
-bool compareByFreq(const pair<string, size_t> &a, const pair<string, size_t> &b) {
-    return a.second > b.second; 
-}
