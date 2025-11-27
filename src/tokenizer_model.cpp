@@ -4,6 +4,7 @@
 #include <sstream>     
 #include <algorithm> 
 #include <mutex>
+#include <map>
 
 using namespace std;
 
@@ -239,7 +240,7 @@ void TokenizerModel::train_word_level(const string &input_file,
 
 
     // Frequency map
-    unordered_map<string, size_t> freqMap;
+    map<string, size_t> freqMap;
     string line;
 
     while (getline(file, line)) {
@@ -302,7 +303,9 @@ void TokenizerModel::train_bpe(const string &input_file,
 
 
     // Frequency map
-    unordered_map<vector<string>, size_t> wordFreqVec;
+    //unordered_map<vector<string>, size_t> wordFreqVec;
+    map<vector<string>, size_t> wordFreqVec;
+
     string line;
     while (getline(file, line)) {
         istringstream stream(line);
@@ -340,7 +343,7 @@ void TokenizerModel::train_bpe(const string &input_file,
     // Combine frequent pairs
     while (id2token.size() < vocab_size) {
         
-        unordered_map<pair<string,string>, size_t, pair_hash> pairFreq;
+        map<pair<string,string>, size_t, pair_hash> pairFreq;
 
         for (const auto &p : wordFreqVec) {
             const vector<string> &symbols = p.first;
@@ -373,7 +376,7 @@ void TokenizerModel::train_bpe(const string &input_file,
         }
 
         // Update wordFreqVec with merged pair
-        unordered_map<vector<string>, size_t> newWordFreqVec;
+        map<vector<string>, size_t> newWordFreqVec;
         
         for (const auto &p : wordFreqVec) {
             const vector<string> &symbols = p.first;
