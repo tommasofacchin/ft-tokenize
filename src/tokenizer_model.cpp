@@ -343,7 +343,7 @@ void TokenizerModel::train_bpe(const string &input_file,
     // Combine frequent pairs
     while (id2token.size() < vocab_size) {
         
-        map<pair<string,string>, size_t, pair_hash> pairFreq;
+        unordered_map<pair<string,string>, size_t, pair_hash> pairFreq;
 
         for (const auto &p : wordFreqVec) {
             const vector<string> &symbols = p.first;
