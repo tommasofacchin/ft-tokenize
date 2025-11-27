@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(ft_tokenize LANGUAGES CXX)
 
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 add_subdirectory(extern/pybind11)  
 
