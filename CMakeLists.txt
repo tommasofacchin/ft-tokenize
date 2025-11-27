@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 3.15)
 project(ft_tokenize LANGUAGES CXX)
 
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+
 add_subdirectory(extern/pybind11)  
 
 pybind11_add_module(ft_tokenize src/ft_tokenizer.cpp)
