@@ -17,7 +17,6 @@ TokenizerModel::TokenizerModel()
 }
 
 void TokenizerModel::ensure_special_tokens() {
-    lock_guard<mutex> lock(mu);
 
     if (!id2token.empty()) return;
 
@@ -38,7 +37,7 @@ void TokenizerModel::ensure_special_tokens() {
 
 // Utility
 int TokenizerModel::token_to_id(const string &token) const {
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     auto i = token2id.find(token);
 
@@ -49,7 +48,7 @@ int TokenizerModel::token_to_id(const string &token) const {
 }
 
 string TokenizerModel::id_to_token(int id) const{
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     if (id >= 0 && id < id2token.size())
         return id2token[id];
@@ -58,19 +57,19 @@ string TokenizerModel::id_to_token(int id) const{
 }
 
 int TokenizerModel::get_token_size() const{
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
     return id2token.size();
 }
 
 vector<string> TokenizerModel::get_vocab() const{
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
     return id2token;
 }
 
 
 // Encoding
 vector<int> TokenizerModel::encode_as_ids(const string &text) const {
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     vector<int> ids;
 
@@ -114,7 +113,7 @@ vector<int> TokenizerModel::encode_as_ids(const string &text) const {
 
 
 vector<string> TokenizerModel::encode_as_tokens(const string &text) const {
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     vector<string> tokens;
 
@@ -158,7 +157,7 @@ vector<string> TokenizerModel::encode_as_tokens(const string &text) const {
 
 // Decoding
 string TokenizerModel::decode_ids(const vector<int> &ids) const {
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     string text;
 
@@ -184,7 +183,7 @@ string TokenizerModel::decode_ids(const vector<int> &ids) const {
 
 
 string TokenizerModel::decode_tokens(const vector<string> &tokens) const {
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     string text;
 
@@ -230,7 +229,7 @@ void TokenizerModel::train_word_level(const string &input_file,
                                       size_t vocab_size,
                                       const vector<string> &user_defined_symbols){
 
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     // Load the file
     ifstream file(input_file);
@@ -295,7 +294,7 @@ void TokenizerModel::train_bpe(const string &input_file,
                                size_t vocab_size,
                                const vector<string> &user_defined_symbols) {
 
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     // Load the file
     ifstream file(input_file);
@@ -413,7 +412,7 @@ void TokenizerModel::train_bpe(const string &input_file,
 
 
 void TokenizerModel::save_model(const string &model_path) const{
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     ofstream ofs(model_path);
     if (!ofs.is_open()) {
@@ -428,7 +427,7 @@ void TokenizerModel::save_model(const string &model_path) const{
 }
 
 void TokenizerModel::load_model(const string &model_path){
-    lock_guard<mutex> lock(mu);
+    lock_guard<recursive_mutex> lock(mu);
 
     ifstream ifs(model_path);
     if (!ifs.is_open()) {

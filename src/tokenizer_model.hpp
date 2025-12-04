@@ -48,7 +48,7 @@ public:
     std::vector<std::string> get_vocab() const;
 
 private:
-    mutable std::mutex mu;
+    mutable std::recursive_mutex mu;
 
     // Vocabulary
     std::unordered_map<std::string,int> token2id;
