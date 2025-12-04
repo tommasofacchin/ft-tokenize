@@ -12,9 +12,18 @@ namespace py = pybind11;
 PYBIND11_MODULE(ft_tokenize, m) {
     m.doc() = "FT Tokenizer";
 
+    py::enum_<TokenizerMode>(m, "TokenizerMode")
+        .value("WORD", TokenizerMode::WORD)
+        .value("BPE", TokenizerMode::BPE)
+        .export_values();
+        
     py::class_<TokenizerModel>(m, "TokenizerModel")
         .def(py::init<>())  
-        .def("train_from_textfile", &TokenizerModel::train_from_textfile)
+        .def("train_from_textfile", &TokenizerModel::train_from_textfile,
+             py::arg("input_file"),
+             py::arg("vocab_size") = 10000,
+             py::arg("user_defined_symbols") = std::vector<std::string>(),
+             py::arg("mode") = TokenizerMode::WORD)  
         .def("save_model", &TokenizerModel::save_model)
         .def("load_model", &TokenizerModel::load_model)
         .def("encode_as_ids", &TokenizerModel::encode_as_ids)
