@@ -3,6 +3,7 @@
 I created this small C++17 tokenizer library as a personal project to better understand how tokenization works.
 <br>It supports both word-level and BPE (Byte Pair Encoding) tokenization and provides a simple Python API via pybind11.
 <br>The library is also published on **PyPI**, so it can be easily installed with pip to train, save, load, encode, and decode text.
+<br>A [demo notebook](./ft-tokenize.ipynb) demonstrating how to use the library is available in the root of this repository and is linked with a [Kaggle notebook](https://www.kaggle.com/code/tommasofacchin/ft-tokenize).
 
 ---
 
@@ -163,3 +164,4 @@ The `TokenizerModel` class provides the following methods:
 
 * `get_vocab()` → List of strings
   Returns the full vocabulary.
+
