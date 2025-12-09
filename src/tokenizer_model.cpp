@@ -5,6 +5,7 @@
 #include <algorithm> 
 #include <mutex>
 #include <map>
+#include <iostream>
 
 using namespace std;
 
@@ -294,11 +295,14 @@ void TokenizerModel::train_bpe(const string &input_file,
                                size_t vocab_size,
                                const vector<string> &user_defined_symbols) {
 
+    cout << "Start train_bpe" << endl;
+
     lock_guard<recursive_mutex> lock(mu);
 
     // Load the file
     ifstream file(input_file);
     if (!file.is_open()) throw runtime_error("Impossible to open file");
+
 
 
     // Frequency map
@@ -316,6 +320,8 @@ void TokenizerModel::train_bpe(const string &input_file,
         }
     }
     file.close();
+    
+    cout << "Lines read: " << wordFreqVec.size() << endl;
 
     // Initialize vocabulary with characters
     id2token.clear();

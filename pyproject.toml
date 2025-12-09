@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "ft-tokenize"
-version = "0.1.8"
+version = "0.1.9"
 description = "Tokenizer for NLP"
 authors = [{ name = "Tommaso Facchin" }]
 readme = "README.md"
