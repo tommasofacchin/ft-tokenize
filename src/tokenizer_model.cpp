@@ -338,10 +338,14 @@ void TokenizerModel::train_bpe(const string &input_file,
         }
     };
 
+    size_t merges_done = 0;  
+    const size_t MAX_MERGES = 50000;
 
     // Combine frequent pairs
     while (id2token.size() < vocab_size) {
         
+        if (merges_done++ > MAX_MERGES) break; //Loop
+
         unordered_map<pair<string,string>, size_t, pair_hash> pairFreq;
 
         for (const auto &p : wordFreqVec) {
